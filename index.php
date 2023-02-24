@@ -34,7 +34,7 @@ $bot->cmd('/cmdlist', function () {
  ↳/oc        | OC Information
  ↳/proxies   | Proxies status 
  ↳/rules     | Rule list 
-📁MyXL Command 
+📁MyXL Command
  ↳/myxl      | Bandwidth usage 
  ↳/setxl 087 | Set default number
 📁System Information
@@ -43,10 +43,19 @@ $bot->cmd('/cmdlist', function () {
  ↳/myip      | Get ip details 
  ↳/speedtest | Speedtest 
  ↳/ping      | Ping bot
- ↳/sysinfo   | System Information</code>",$options);
+ ↳/sysinfo   | System Information
+📁palsterzilla custom
+ ↳/logread   | Last 10 logs
+ ↳/ocrestart | Restart OC
+ ↳/init      | Restart OC & Modem
+ ↳/reboot    | Reboot
+ ↳/ifdown    | Trigger AT+RESET
+ ↳/wwanip    | Get modem IP
+ ↳/netcat    | Check connections
+ ↳/cmd       | Custom cmd</code>",$options);
 });
 
-// OpenWRT Command 
+// OpenWRT Command
 $bot->cmd('/proxies', function () {
     $options = ['parse_mode' => 'html','reply' => true];
     return Bot::sendMessage("<code>".Proxies()."</code>",$options);
@@ -87,6 +96,48 @@ $bot->cmd('/speedtest', function () {
     Bot::sendMessage("<code>Speedtest on Progress</code>", $options);
     return Bot::sendMessage("<code>".Speedtest()."</code>",$options);
 });
+
+//palsterzilla add
+$bot->cmd('/logread', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("logread -l 10")."</code>",$options);
+});
+
+$bot->cmd('/ocrestart', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("/etc/init.d/openclash restart")."</code>",$options);
+});
+
+$bot->cmd('/init', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("/root/daily.sh")."</code>",$options);
+});
+
+$bot->cmd('/reboot', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("reboot")."</code>",$options);
+});
+
+$bot->cmd('/ifdown', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("ifdown wan1")."</code>",$options);
+});
+
+$bot->cmd('/wwanip', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("ifconfig wwan0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'")."</code>",$options);
+});
+
+$bot->cmd('/netcat', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("/root/net-status-openwrt/ngecat.sh")."</code>",$options);
+});
+
+$bot->cmd('/cmd', function ($input) {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("$input")."</code>",$options);
+});
+//palsterzilla end
 
 //Myxl cmd
 $bot->cmd('/setxl', function ($number) {

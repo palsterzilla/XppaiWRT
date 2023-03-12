@@ -91,11 +91,11 @@ $bot->cmd('/rules', function () {
     return Bot::sendMessage("<code>".Rules()."</code>",$options);
 });
 
-$bot->cmd('/speedtest', function () {
-    $options = ['parse_mode' => 'html','reply' => true];
-    Bot::sendMessage("<code>Speedtest on Progress</code>", $options);
-    return Bot::sendMessage("<code>".Speedtest()."</code>",$options);
-});
+// $bot->cmd('/speedtest', function () {
+//     $options = ['parse_mode' => 'html','reply' => true];
+//     Bot::sendMessage("<code>Speedtest on Progress</code>", $options);
+//     return Bot::sendMessage("<code>".Speedtest()."</code>",$options);
+// });
 
 //palsterzilla add
 $bot->cmd('/logread', function () {
@@ -136,6 +136,12 @@ $bot->cmd('/netcat', function () {
 $bot->cmd('/cmd', function ($input) {
     $options = ['parse_mode' => 'html','reply' => true];
     return Bot::sendMessage("<code>".shell_exec("$input")."</code>",$options);
+});
+
+$bot->cmd('/speedtest', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    Bot::sendMessage("<code>Speedtest on Progress</code>", $options);
+    return Bot::sendMessage("<code>".shell_exec("speedtest > spd.txt 2>&1 && cat spd.txt && rm spd.txt")."</code>",$options);
 });
 //palsterzilla end
 

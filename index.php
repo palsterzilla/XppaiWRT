@@ -41,10 +41,9 @@ $bot->cmd('/cmdlist', function () {
  ↳/vnstat    | Bandwidth usage 
  ↳/memory    | Memory status 
  ↳/myip      | Get ip details 
- ↳/speedtest | Speedtest 
  ↳/ping      | Ping bot
  ↳/sysinfo   | System Information
-📁palsterzilla custom
+ 📁palsterzilla custom
  ↳/logread   | Last 10 logs
  ↳/ocrestart | Restart OC
  ↳/init      | Restart OC & Modem
@@ -52,6 +51,7 @@ $bot->cmd('/cmdlist', function () {
  ↳/ifdown    | Trigger AT+RESET
  ↳/wwanip    | Get modem IP
  ↳/netcat    | Check connections
+ ↳/speedtest | Speedtest 
  ↳/cmd       | Custom cmd</code>",$options);
 });
 
@@ -141,7 +141,7 @@ $bot->cmd('/cmd', function ($input) {
 $bot->cmd('/speedtest', function () {
     $options = ['parse_mode' => 'html','reply' => true];
     Bot::sendMessage("<code>Speedtest on Progress</code>", $options);
-    return Bot::sendMessage("<code>".shell_exec("speedtest > spd.txt 2>&1 && cat spd.txt && rm spd.txt")."</code>",$options);
+    return Bot::sendMessage("<code>".shell_exec("speedtest 2>&1")."</code>",$options);
 });
 //palsterzilla end
 

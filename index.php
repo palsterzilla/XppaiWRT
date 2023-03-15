@@ -43,7 +43,7 @@ $bot->cmd('/cmdlist', function () {
  ↳/myip      | Get ip details 
  ↳/ping      | Ping bot
  ↳/sysinfo   | System Information
- 📁palsterzilla custom
+📁palsterzilla custom
  ↳/logread   | Last 10 logs
  ↳/ocrestart | Restart OC
  ↳/init      | Restart OC & Modem
@@ -129,8 +129,9 @@ $bot->cmd('/wwanip', function () {
 });
 
 $bot->cmd('/netcat', function () {
-    $options = ['parse_mode' => 'html','reply' => true];
-    return Bot::sendMessage("<code>".shell_exec("/root/net-status-openwrt/ngecat.sh")."</code>",$options);
+    $options = ['parse_mode' => 'markdown','reply' => true];
+    // return Bot::sendMessage("<code>".shell_exec("/root/net-status-openwrt/ngecat.sh")."</code>",$options);
+    return Bot::sendMessage(shell_exec("/root/net-status-openwrt/ngecat.sh"),$options);
 });
 
 $bot->cmd('/cmd', function ($input) {

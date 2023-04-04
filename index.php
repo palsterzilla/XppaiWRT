@@ -51,7 +51,9 @@ $bot->cmd('/cmdlist', function () {
  ↳/ifdown    | Trigger AT+RESET
  ↳/wwanip    | Get modem IP
  ↳/netcat    | Check connections
- ↳/speedtest | Speedtest 
+ ↳/speedtest | Speedtest
+ ↳/clz       | Restart cloudflared
+ ↳/ngrok     | Access terminal via ngrok
  ↳/cmd       | Custom cmd</code>",$options);
 });
 
@@ -91,12 +93,6 @@ $bot->cmd('/rules', function () {
     return Bot::sendMessage("<code>".Rules()."</code>",$options);
 });
 
-// $bot->cmd('/speedtest', function () {
-//     $options = ['parse_mode' => 'html','reply' => true];
-//     Bot::sendMessage("<code>Speedtest on Progress</code>", $options);
-//     return Bot::sendMessage("<code>".Speedtest()."</code>",$options);
-// });
-
 //palsterzilla add
 $bot->cmd('/logread', function () {
     $options = ['parse_mode' => 'html','reply' => true];
@@ -130,7 +126,6 @@ $bot->cmd('/wwanip', function () {
 
 $bot->cmd('/netcat', function () {
     $options = ['parse_mode' => 'markdown','reply' => true];
-    // return Bot::sendMessage("<code>".shell_exec("/root/net-status-openwrt/ngecat.sh")."</code>",$options);
     return Bot::sendMessage(shell_exec("/root/net-status-openwrt/ngecat.sh"),$options);
 });
 
@@ -143,6 +138,17 @@ $bot->cmd('/speedtest', function () {
     $options = ['parse_mode' => 'html','reply' => true];
     Bot::sendMessage("<code>Speedtest on Progress</code>", $options);
     return Bot::sendMessage("<code>".shell_exec("speedtest 2>&1")."</code>",$options);
+});
+
+$bot->cmd('/ngrok', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    // return Bot::sendMessage("<code>".shell_exec("kill $(ps aux | grep 'ngrok' | awk '{print $2}') && ngrok http 192.168.1.1:7681")."</code>",$options);
+    return Bot::sendMessage("<code>".shell_exec("ngrok http 192.168.1.1:7681")."</code>",$options);
+});
+
+$bot->cmd('/clz', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("/etc/init.d/cloudflared restart")."</code>",$options);
 });
 //palsterzilla end
 
